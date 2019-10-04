@@ -24,12 +24,15 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
-public class SequencesComparatorTest {
+
+/**
+ * Reproduced from CommonsCollections 4 without modifications, to test for regresssions in new implementation
+ */
+public class SequencesComparatorCommons4Test {
 
     private List<String> before;
     private List<String> after;
@@ -147,35 +150,6 @@ public class SequencesComparatorTest {
         }
     }
     
-    @Test
-    public void testMaxDifference() throws MaxDifferenceExceeded {
-        String a = "abcdefghijklm";
-        String b = "bcefgijklmn";
-        
-        List<Character> al = toCharacterList(a);
-        List<Character> bl = toCharacterList(b);
-        
-        SequencesComparator<Character> s = new SequencesComparator<>(al, bl);
-        assertEquals(4, s.getScript().getModifications());
-        assertEquals(4, s.getScript(4).getModifications());
-    }
-    
-    
-    @Test(expected = MaxDifferenceExceeded.class)
-    public void testMaxDifferenceLimit() throws MaxDifferenceExceeded {
-        String a = "abcdefghijklm";
-        String b = "bcefgijklmn";
-
-        List<Character> al = toCharacterList(a);
-        List<Character> bl = toCharacterList(b);
-
-        SequencesComparator<Character> s = new SequencesComparator<>(al, bl);
-        s.getScript(3);
-    }
-    
-    private List<Character> toCharacterList(String s) {
-        return s.chars().mapToObj(e->(char)e).collect(Collectors.toList());
-    }
 
     private List<Character> sequence(final String string) {
         final List<Character> list = new ArrayList<>();
