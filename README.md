@@ -1,4 +1,4 @@
-## SequencesComparator
+## SequencesComparator with max difference limit
 
 This project is a small enhancement on top of Apache Commons Collections 4 SequencesComparator
 It is released under the same license terms and ideally it should be incorporated into the Apache project in a future version.
