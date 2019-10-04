@@ -3,7 +3,7 @@
 This project is a small enhancement on top of Apache Commons Collections 4 SequencesComparator
 It is released under the same license terms and ideally it should be incorporated into the Apache project in a future version.
 
-SequenceComparator allows two sequences (Lists) to be differenced, producing an EditScript which describes the insert/delete operations required to transform
+SequenceComparator is a utility for diffing two sequences or Lists. The result of a diff is an EditScript which describes the insert/delete operations required to transform
 one sequence into the other
 
 The algorithm used is the [Myers diff algorithm](http://www.xmailserver.org/diff2.pdf) which is efficient in most common cases.
