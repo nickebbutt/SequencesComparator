@@ -128,8 +128,37 @@ public class SequencesComparator<T> {
      *         sequences
      */
     public EditScript<T> getScript() {
+        try {
+            return getScript(Integer.MAX_VALUE);
+        } catch (MaxDifferenceExceeded maxDifferenceExceeded) {
+            // this should not happen
+            throw new RuntimeException("Internal Error");
+        }
+    }
+    
+    /**
+     * Get the {@link EditScript} object.
+     * <p>
+     * It is guaranteed that the objects embedded in the {@link InsertCommand
+     * insert commands} come from the second sequence and that the objects
+     * embedded in either the {@link DeleteCommand delete commands} or
+     * {@link KeepCommand keep commands} come from the first sequence. This can
+     * be important if subclassing is used for some elements in the first
+     * sequence and the <code>equals</code> method is specialized.
+     *
+     * @return the edit script resulting from the comparison of the two
+     *         sequences
+     */
+    public EditScript<T> getScript(int maxDifferences) throws MaxDifferenceExceeded {
+        
         final EditScript<T> script = new EditScript<>();
-        buildScript(0, sequence1.size(), 0, sequence2.size(), script);
+        
+        buildScript(0, sequence1.size(), 0, sequence2.size(), script, maxDifferences);
+        
+        if ( script.getModifications() > maxDifferences) {
+            //if maxDifferences was odd, we may end up with maxDifferences + 1 modifications, so to strictly observe max throw here
+            throw new MaxDifferenceExceeded();
+        }
         return script;
     }
 
@@ -166,9 +195,10 @@ public class SequencesComparator<T> {
      * @param end1  the end of the first sequence to be compared
      * @param start2  the begin of the second sequence to be compared
      * @param end2  the end of the second sequence to be compared
+     * @param maxDiff maximum number of differences to permit
      * @return the middle snake
      */
-    private Snake getMiddleSnake(final int start1, final int end1, final int start2, final int end2) {
+    private Snake getMiddleSnake(final int start1, final int end1, final int start2, final int end2, int maxDiff) throws MaxDifferenceExceeded {
         // Myers Algorithm
         // Initialisations
         final int m = end1 - start1;
@@ -179,9 +209,13 @@ public class SequencesComparator<T> {
 
         final int delta  = m - n;
         final int sum    = n + m;
-        final int offset = (sum % 2 == 0 ? sum : sum + 1) / 2;
+
+        int max = maxDiff % 2 == 0 ? maxDiff : maxDiff != Integer.MAX_VALUE ? maxDiff + 1 : maxDiff;
+        final int offset = Math.min((sum % 2 == 0 ? sum : sum + 1), max) / 2;
         vDown[1+offset] = start1;
         vUp[1+offset]   = end1 + 1;
+        
+        
 
         for (int d = 0; d <= offset ; ++d) {
             // Down
@@ -237,8 +271,7 @@ public class SequencesComparator<T> {
             }
         }
 
-        // this should not happen
-        throw new RuntimeException("Internal Error");
+        throw new MaxDifferenceExceeded();
     }
 
 
@@ -252,9 +285,9 @@ public class SequencesComparator<T> {
      * @param script the edited script
      */
     private void buildScript(final int start1, final int end1, final int start2, final int end2,
-                             final EditScript<T> script) {
+                             final EditScript<T> script, int maxDifferences) throws MaxDifferenceExceeded {
 
-        final Snake middle = getMiddleSnake(start1, end1, start2, end2);
+        final Snake middle = getMiddleSnake(start1, end1, start2, end2, maxDifferences);
 
         if (middle == null
                 || middle.getStart() == end1 && middle.getDiag() == end1 - end2
@@ -282,13 +315,13 @@ public class SequencesComparator<T> {
 
             buildScript(start1, middle.getStart(),
                         start2, middle.getStart() - middle.getDiag(),
-                        script);
+                        script, maxDifferences);
             for (int i = middle.getStart(); i < middle.getEnd(); ++i) {
                 script.append(new KeepCommand<>(sequence1.get(i)));
             }
             buildScript(middle.getEnd(), end1,
                         middle.getEnd() - middle.getDiag(), end2,
-                        script);
+                        script, maxDifferences);
         }
     }
 
@@ -347,4 +380,9 @@ public class SequencesComparator<T> {
             return diag;
         }
     }
+
+    /**
+     * This exception indicates that the max allowed edits has been exceeded while calculating the edit script
+     */
+    public static class MaxDifferenceExceeded extends Exception {}
 }
