@@ -1,6 +1,7 @@
 ## SequencesComparator
 
-This code is a small enhancement on top of Apache Commons Collections 4 SequencesComparator
+This code is a small enhancement on top of Apache Commons Collections 4 SequencesComparator, and is released under the same license terms.
+Ideally it should be incorporated into that project in a future version.
 
 SequenceComparator allows two sequences (Lists) to be differenced, producing an EditScript which describes the insert/delete operations required to transform
 one sequence into the other
@@ -16,8 +17,8 @@ the complexity of the algorithm will still result in an expensive / impractical 
 The ability to set an upper bound on the difference detection allows an approach which searches for differences but aborts early if the calculation
 proves to be too complex / expensive.
 
-I need this to test differences between two long sequences which will usually be very similar, but occasionally entirely different
-In the case they are very different, I need to abort the diff without spending too much time
+I need this to test differences between two long sequences which will usually be very similar, but occasionally entirely different.
+In the case they are very dissimilar, I need to abort the diff without spending too much time
 
 
 
