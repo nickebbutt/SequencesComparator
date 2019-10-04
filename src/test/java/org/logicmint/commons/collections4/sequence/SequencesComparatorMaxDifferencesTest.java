@@ -49,6 +49,18 @@ public class SequencesComparatorMaxDifferencesTest {
             testTransformation(l1, l2, script);
         }
     }
+
+    <T> EditScript<T> getEditScript(List<T> l1, List<T> l2) throws MaxDifferencesExceeded {
+
+        SequencesComparator<T> s = new SequencesComparator<>(l1, l2);
+
+        //this original unbounded search may take a long time if there are many differences:
+        //EditScript script = s.getScript();
+        
+        //this new version limits the differences and throws MaxDifferencesException if they are exceeded
+        int maxDifferences = 20; 
+        return s.getScript(maxDifferences);
+    }
     
     @Test
     public void testWhenThereAreMoreThanMaxDifferencesProcessingIsAborted() {
@@ -66,7 +78,7 @@ public class SequencesComparatorMaxDifferencesTest {
             try {
                 int diffs = s.getScript(max).getModifications();
                 assertEquals(diffs, CommonsCollection4Util.getDifferenceCountUsingCommons(l1, l2));
-            } catch (MaxDifferenceExceeded maxDifferenceExceeded) {
+            } catch (MaxDifferencesExceeded maxDifferencesExceeded) {
                 exceedCount++;
                 assertTrue(CommonsCollection4Util.getDifferenceCountUsingCommons(l1, l2) > max);
             }
@@ -89,7 +101,7 @@ public class SequencesComparatorMaxDifferencesTest {
         try {
             s.getScript(20);
             fail("should not succeed!");
-        } catch (MaxDifferenceExceeded maxDifferenceExceeded) {
+        } catch (MaxDifferencesExceeded maxDifferencesExceeded) {
             long timeTaken = System.currentTimeMillis() - start;
             System.out.println("Time taken " + timeTaken);
             assertTrue(timeTaken < 10); //shoudl be a lot less!
@@ -127,7 +139,7 @@ public class SequencesComparatorMaxDifferencesTest {
     }
 
     @Test
-    public void testMaxDifference() throws MaxDifferenceExceeded {
+    public void testMaxDifference() throws MaxDifferencesExceeded {
         String a = "abcdefghijklm";
         String b = "bcefgijklmn";
         
@@ -140,8 +152,8 @@ public class SequencesComparatorMaxDifferencesTest {
     }
     
     
-    @Test(expected = MaxDifferenceExceeded.class)
-    public void testMaxDifferenceLimit() throws MaxDifferenceExceeded {
+    @Test(expected = MaxDifferencesExceeded.class)
+    public void testMaxDifferenceLimit() throws MaxDifferencesExceeded {
         String a = "abcdefghijklm";
         String b = "bcefgijklmn";
 

@@ -130,7 +130,7 @@ public class SequencesComparator<T> {
     public EditScript<T> getScript() {
         try {
             return getScript(Integer.MAX_VALUE);
-        } catch (MaxDifferenceExceeded maxDifferenceExceeded) {
+        } catch (MaxDifferencesExceeded maxDifferencesExceeded) {
             // this should not happen
             throw new RuntimeException("Internal Error");
         }
@@ -149,7 +149,7 @@ public class SequencesComparator<T> {
      * @return the edit script resulting from the comparison of the two
      *         sequences
      */
-    public EditScript<T> getScript(int maxDifferences) throws MaxDifferenceExceeded {
+    public EditScript<T> getScript(int maxDifferences) throws MaxDifferencesExceeded {
         
         final EditScript<T> script = new EditScript<>();
         
@@ -157,7 +157,7 @@ public class SequencesComparator<T> {
         
         if ( script.getModifications() > maxDifferences) {
             //if maxDifferences was odd, we may end up with maxDifferences + 1 modifications, so to strictly observe max throw here
-            throw new MaxDifferenceExceeded();
+            throw new MaxDifferencesExceeded();
         }
         return script;
     }
@@ -198,7 +198,7 @@ public class SequencesComparator<T> {
      * @param maxDiff maximum number of differences to permit
      * @return the middle snake
      */
-    private Snake getMiddleSnake(final int start1, final int end1, final int start2, final int end2, int maxDiff) throws MaxDifferenceExceeded {
+    private Snake getMiddleSnake(final int start1, final int end1, final int start2, final int end2, int maxDiff) throws MaxDifferencesExceeded {
         // Myers Algorithm
         // Initialisations
         final int m = end1 - start1;
@@ -271,7 +271,7 @@ public class SequencesComparator<T> {
             }
         }
 
-        throw new MaxDifferenceExceeded();
+        throw new MaxDifferencesExceeded();
     }
 
 
@@ -285,7 +285,7 @@ public class SequencesComparator<T> {
      * @param script the edited script
      */
     private void buildScript(final int start1, final int end1, final int start2, final int end2,
-                             final EditScript<T> script, int maxDifferences) throws MaxDifferenceExceeded {
+                             final EditScript<T> script, int maxDifferences) throws MaxDifferencesExceeded {
 
         final Snake middle = getMiddleSnake(start1, end1, start2, end2, maxDifferences);
 
