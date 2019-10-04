@@ -18,8 +18,8 @@ the complexity of the algorithm will still result in an expensive / impractical 
 The ability to set an upper bound on the difference detection allows an approach which searches for differences but aborts early if the calculation
 proves to be too complex / expensive.
 
-I needed this feature to test for differences between two long sequences which will usually be very similar, but occasionally entirely different.
-In the case they are very dissimilar, I need to abort the diff without spending too much time processing.
+I need this feature to test for differences between two long sequences which will usually be very similar, but occasionally entirely different.
+In the case they are very dissimilar, this implementation allows me to abort the diff without spending too much time processing.
 
 
 
