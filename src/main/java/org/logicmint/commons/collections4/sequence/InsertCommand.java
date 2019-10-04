@@ -14,16 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.sequence;
+package org.logicmint.commons.collections4.sequence;
 
 /**
- * Command representing the deletion of one object of the first sequence.
+ * Command representing the insertion of one object of the second sequence.
  * <p>
- * When one object of the first sequence has no corresponding object in the
- * second sequence at the right place, the {@link EditScript edit script}
+ * When one object of the second sequence has no corresponding object in the
+ * first sequence at the right place, the {@link EditScript edit script}
  * transforming the first sequence into the second sequence uses an instance of
- * this class to represent the deletion of this object. The objects embedded in
- * these type of commands always come from the first sequence.
+ * this class to represent the insertion of this object. The objects embedded in
+ * these type of commands always come from the second sequence.
  * </p>
  *
  * @see SequencesComparator
@@ -31,25 +31,27 @@ package org.apache.commons.collections4.sequence;
  *
  * @since 4.0
  */
-public class DeleteCommand<T> extends EditCommand<T> {
+public class InsertCommand<T> extends EditCommand<T> {
 
     /**
-     * Simple constructor. Creates a new instance of {@link DeleteCommand}.
+     * Simple constructor. Creates a new instance of InsertCommand
      *
-     * @param object  the object of the first sequence that should be deleted
+     * @param object  the object of the second sequence that should be inserted
      */
-    public DeleteCommand(final T object) {
+    public InsertCommand(final T object) {
         super(object);
     }
 
     /**
-     * Accept a visitor. When a <code>DeleteCommand</code> accepts a visitor, it calls
-     * its {@link CommandVisitor#visitDeleteCommand visitDeleteCommand} method.
+     * Accept a visitor. When an <code>InsertCommand</code> accepts a visitor,
+     * it calls its {@link CommandVisitor#visitInsertCommand visitInsertCommand}
+     * method.
      *
      * @param visitor  the visitor to be accepted
      */
     @Override
     public void accept(final CommandVisitor<T> visitor) {
-        visitor.visitDeleteCommand(getObject());
+        visitor.visitInsertCommand(getObject());
     }
+
 }

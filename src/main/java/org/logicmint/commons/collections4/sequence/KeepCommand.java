@@ -14,16 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.sequence;
+package org.logicmint.commons.collections4.sequence;
 
 /**
- * Command representing the insertion of one object of the second sequence.
+ * Command representing the keeping of one object present in both sequences.
  * <p>
- * When one object of the second sequence has no corresponding object in the
- * first sequence at the right place, the {@link EditScript edit script}
+ * When one object of the first sequence <code>equals</code> another objects in
+ * the second sequence at the right place, the {@link EditScript edit script}
  * transforming the first sequence into the second sequence uses an instance of
- * this class to represent the insertion of this object. The objects embedded in
- * these type of commands always come from the second sequence.
+ * this class to represent the keeping of this object. The objects embedded in
+ * these type of commands always come from the first sequence.
  * </p>
  *
  * @see SequencesComparator
@@ -31,27 +31,27 @@ package org.apache.commons.collections4.sequence;
  *
  * @since 4.0
  */
-public class InsertCommand<T> extends EditCommand<T> {
+public class KeepCommand<T> extends EditCommand<T> {
 
     /**
-     * Simple constructor. Creates a new instance of InsertCommand
+     * Simple constructor. Creates a new instance of KeepCommand
      *
-     * @param object  the object of the second sequence that should be inserted
+     * @param object  the object belonging to both sequences (the object is a
+     *   reference to the instance in the first sequence which is known
+     *   to be equal to an instance in the second sequence)
      */
-    public InsertCommand(final T object) {
+    public KeepCommand(final T object) {
         super(object);
     }
 
     /**
-     * Accept a visitor. When an <code>InsertCommand</code> accepts a visitor,
-     * it calls its {@link CommandVisitor#visitInsertCommand visitInsertCommand}
-     * method.
+     * Accept a visitor. When a <code>KeepCommand</code> accepts a visitor, it
+     * calls its {@link CommandVisitor#visitKeepCommand visitKeepCommand} method.
      *
      * @param visitor  the visitor to be accepted
      */
     @Override
     public void accept(final CommandVisitor<T> visitor) {
-        visitor.visitInsertCommand(getObject());
+        visitor.visitKeepCommand(getObject());
     }
-
 }
