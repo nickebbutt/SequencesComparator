@@ -34,7 +34,9 @@ A sample application is:
         
         //this new version limits the differences and throws MaxDifferencesException if they are exceeded
         int maxDifferences = 20; 
-        return s.getScript(maxDifferences);
+        EditScript script = s.getScript(maxDifferences);
+        
+        return script;
     }
 
 
