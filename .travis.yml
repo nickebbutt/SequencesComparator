@@ -8,7 +8,7 @@ deploy:
   api_key:
     secure: kkdoPci0Edt6Cad2FGmevuxhdkMR13JUQw2MkVhCWvLyzMz1FOB66NPanPL/hDfrwcpR90QkkpehOtcztgjMf/Wc11u7lC8HeJxQJXL0DKvVc2LMqzuxpbEDZxRav+/bhCBASSjtd9B91FMdcLoTEGRhyC22RlCtM+/TuFIuLTN7JWe0fZyOu0lo5qn1S3ZRG4eM1VH5WMfbihWFW0+FB716Yng6PbrqDuR6QfobUqoIA/AhBLHVbA1lG3Oh5aXIHjVF+8Q3uNCZzP1ai4IzASdN/4rS+idTh9ui6jbyGTTl3I6uUcgXQ316n0Is3CSg/oY4el4aDx67lHswDKR5FzNEbicb6ZVB6kKs3IPNSLcO/xL9M/bwdOXqgSO/76Lk7J9uJtORlmLjZf5whw/C06zP3xWfH9eiFtHX43UOemAiQMoGD73fykZ/8FV2u8GHtvbGS0W+p+6YtfGdOkcdB7SZ/ANxZ+LJyC3XluVN5QMRsLJfy/tvpctvrD8Rwb+aGfBydFGB0s4GHI331PLXmaaKxI8fslCKEVE/zARr1Q16LHzmDxVDl9YKloZ3heNEKpPdvTfpe8gCe5fxUs4+5cve2BgkU+JSCie1Bbbdh4gkvTvdJrpbyOeiApzILTfkZIYIk2HYKmJdsQHxoNf2W9W61m8/ExgjJzTraeppFqk=
   file_glob: true
-  file: build/libs/SequencesComparator-*.jar
+  file: build/libs/sequences-comparator-*.jar
   on:
     repo: nickebbutt/SequencesComparator
     tags: true
