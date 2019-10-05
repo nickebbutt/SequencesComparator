@@ -1,5 +1,7 @@
 ## SequencesComparator with max difference limit
 
+[![Build Status](https://travis-ci.org/nickebbutt/SequencesComparator.svg?branch=master)](https://travis-ci.org/nickebbutt/SequencesComparator)
+
 This project is a small enhancement on top of Apache Commons Collections 4 SequencesComparator
 It is released under the same license terms and ideally it should be incorporated into the Apache project in a future version.
 

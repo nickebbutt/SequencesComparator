@@ -116,7 +116,7 @@ public class SequencesComparatorMaxDifferencesTest {
 
     private void testTransformation(List<Character> l1, List<Character> l2, EditScript<Character> script) {
         List<Character> l3 = new LinkedList<>(l1);
-        CommandVisitor<Character> v = new CommandVisitor<>() {
+        CommandVisitor<Character> v = new CommandVisitor<Character>() {
             int index = 0;
 
             @Override

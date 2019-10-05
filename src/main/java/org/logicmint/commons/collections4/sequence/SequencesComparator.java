@@ -145,9 +145,10 @@ public class SequencesComparator<T> {
      * {@link KeepCommand keep commands} come from the first sequence. This can
      * be important if subclassing is used for some elements in the first
      * sequence and the <code>equals</code> method is specialized.
-     *
-     * @return the edit script resulting from the comparison of the two
-     *         sequences
+     * 
+     * @param maxDifferences if this difference count is exceeded the construction of the edit script will terminate early
+     * @throws MaxDifferencesExceeded if the search terminates early because maxDifferences is exceeded
+     * @return the edit script resulting from the comparison of the two sequences
      */
     public EditScript<T> getScript(int maxDifferences) throws MaxDifferencesExceeded {
         
